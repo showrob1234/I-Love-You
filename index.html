@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>I Love You ❤️</title>
+    <style>
+        /* --- Global Styles & Theme --- */
+        :root {
+            --primary-pink: #FFC0CB;
+            /* Pink */
+            --secondary-red: #FF69B4;
+            /* HotPink */
+            --accent-red: #DC143C;
+            /* Crimson */
+            --text-light: #FFFFFF;
+            --text-dark: #4B0082;
+            /* Indigo - for a romantic contrast */
+            --bg-light: #FFF0F5;
+            /* LavenderBlush */
+            --soft-shadow: 0 4px 12px rgba(220, 20, 60, 0.15);
+            --heart-pulse-duration: 1.5s;
+        }
+
+        @font-face {
+            font-family: 'RomanticFont';
+            src: url('https://fonts.gstatic.com/s/dancingscript/v24/If2RXTr6YS-zF4S-kcSWSVi_szLviuEViw.woff2') format('woff2');
+            /* Example: Dancing Script */
+        }
+
+        @font-face {
+            font-family: 'BodyFont';
+            src: url('https://fonts.gstatic.com/s/opensans/v34/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVc.woff2') format('woff2');
+            /* Example: Open Sans */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'BodyFont', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            /* Mobile-first width */
+            min-height: 95vh;
+            /* Almost full screen */
+            background-color: var(--text-light);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .app-header {
+            background: linear-gradient(135deg, var(--primary-pink), var(--secondary-red));
+            color: var(--text-light);
+            padding: 20px;
+            text-align: center;
+            font-family: 'RomanticFont', cursive;
+            font-size: 28px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .app-header .heart-icon {
+            font-size: 24px;
+            animation: heartBeat var(--heart-pulse-duration) infinite;
+            display: inline-block;
+        }
+
+        .app-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+            /* For absolute positioned elements inside */
+        }
+
+        .feature-screen {
+            display: none;
+            /* Hidden by default */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .feature-screen.active {
+            display: block;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--text-light);
+            border-top: 1px solid var(--primary-pink);
+            padding: 10px 0;
+            position: sticky;
+            bottom: 0;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(220, 20, 60, 0.1);
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: var(--secondary-red);
+            font-size: 12px;
+            text-align: center;
+            cursor: pointer;
+            padding: 5px;
+            flex: 1;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            color: var(--accent-red);
+            transform: scale(1.1);
+        }
+
+        .nav-item .nav-icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        /* --- UI Elements --- */
+        button.romantic-button {
+            background: linear-gradient(135deg, var(--secondary-red), var(--accent-red));
+            color: var(--text-light);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: var(--soft-shadow);
+            font-family: 'BodyFont', sans-serif;
+            margin-top: 10px;
+        }
+
+        button.romantic-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(220, 20, 60, 0.25);
+        }
+
+        button.romantic-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="password"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--primary-pink);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'BodyFont', sans-serif;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        h2 {
+            font-family: 'RomanticFont', cursive;
+            color: var(--accent-red);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        h3 {
+            font-family: 'RomanticFont', cursive;
+            color: var(--secondary-red);
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .message-display,
+        .quote-display,
+        .poem-display {
+            background-color: #fff9fb;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px dashed var(--primary-pink);
+            margin-bottom: 15px;
+            min-height: 50px;
+            box-shadow: var(--soft-shadow);
+            position: relative;
+            /* For TTS button */
+        }
+
+        .message-display p,
+        .quote-display p,
+        .poem-display p {
+            white-space: pre-wrap;
+            /* Preserve line breaks in Bangla */
+            line-height: 1.6;
+        }
+
+        .tts-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary-pink);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+
+        /* --- Animations --- */
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .falling-hearts-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            /* So it doesn't interfere with clicks */
+            z-index: 0;
+        }
+
+        .falling-heart {
+            position: absolute;
+            font-size: 20px;
+            /* Adjust size */
+            color: var(--primary-pink);
+            opacity: 0.7;
+            animation: fall linear infinite;
+            user-select: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- Specific Feature Styles --- */
+        .love-letter-preview {
+            border: 2px solid var(--secondary-red);
+            padding: 20px;
+            margin-top: 15px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 12 C20 0 80 0 88 12 L88 88 C80 100 20 100 12 88 Z' fill='%23FFF0F5' stroke='%23FFC0CB' stroke-width='2'/%3E%3C/svg%3E");
+            /* Light pink parchment-like */
+            background-size: cover;
+            border-radius: 10px;
+        }
+
+        .emoji-palette button {
+            background: none;
+            border: 1px solid var(--primary-pink);
+            border-radius: 5px;
+            font-size: 20px;
+            margin: 3px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .share-buttons button {
+            margin: 5px;
+        }
+
+        #coupleDiaryTimeline .diary-entry {
+            background-color: #fff5f7;
+            border-left: 4px solid var(--secondary-red);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        #coupleDiaryTimeline .diary-entry strong {
+            color: var(--accent-red);
+        }
+
+        #countdownTimer {
+            font-size: 1.5em;
+            color: var(--accent-red);
+            text-align: center;
+            margin-bottom: 15px;
+            font-family: 'RomanticFont', cursive;
+        }
+
+        #aiLoverChatbot .chat-area {
+            height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--primary-pink);
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fffafa;
+        }
+
+        #aiLoverChatbot .chat-message {
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        #aiLoverChatbot .user-message {
+            background-color: var(--primary-pink);
+            color: var(--text-dark);
+            margin-left: auto;
+            text-align: right;
+        }
+
+        #aiLoverChatbot .bot-message {
+            background-color: #ffe4e1;
+            /* MistyRose */
+            color: var(--text-dark);
+            margin-right: auto;
+        }
+
+        .gift-suggestion {
+            border: 1px solid var(--primary-pink);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: var(--text-light);
+            box-shadow: var(--soft-shadow);
+        }
+
+        .gift-suggestion img {
+            max-width: 100px;
+            float: left;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+
+        .gift-suggestion h4 {
+            color: var(--secondary-red);
+            margin-bottom: 5px;
+        }
+
+        .gift-suggestion p {
+            font-size: 0.9em;
+        }
+
+        .gift-suggestion a {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #loveGames .quiz-question,
+        #loveGames .compatibility-result {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #fff9fb;
+            border-radius: 5px;
+        }
+
+        /* --- Premium/Ad Placeholders --- */
+        .premium-feature-notice {
+            background-color: #fffacd;
+            /* LemonChiffon */
+            border: 1px solid #ffd700;
+            /* Gold */
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .premium-feature-notice button {
+            margin-top: 5px;
+        }
+
+        .ad-placeholder {
+            width: 90%;
+            height: 50px;
+            background-color: #f0f0f0;
+            border: 1px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px auto;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        /* --- App Lock Screen --- */
+        #appLockScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 192, 203, 0.9);
+            /* Semi-transparent pink */
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #appLockScreen .lock-content {
+            background: var(--text-light);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Utility */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <!-- Replace with a soft romantic track -->
+        Your browser does not support the audio element.
+    </audio>
+    <div id="appLockScreen" class="hidden">
+        <div class="lock-content">
+            <h2><span class="heart-icon">❤️</span> App Locked <span class="heart-icon">❤️</span></h2>
+            <p id="pinInstruction">Enter your PIN to unlock.</p>
+            <input type="password" id="pinInput" maxlength="4" placeholder="PIN">
+            <button id="pinSubmitButton" class="romantic-button">Unlock</button>
+            <button id="pinSetupButton" class="romantic-button hidden">Set up PIN</button>
+            <p id="pinError" style="color:red; margin-top:10px;"></p>
+        </div>
+    </div>
+    <div class="app-container">
+        <div class="app-header">
+            <span class="heart-icon">❤️</span> I Love You <span class="heart-icon">🌹</span>
+        </div>
+        <div class="falling-hearts-bg" id="fallingHeartsContainer"></div>
+
+        <div class="app-content">
+            <!-- Home Screen (Default) -->
+            <div id="homeScreen" class="feature-screen active">
+                <h2>Welcome, Lovebirds! 💑</h2>
+                <p style="text-align:center; margin-bottom:20px;">Your daily dose of romance awaits. Explore our
+                    features to cherish your love.</p>
+                <div class="message-display">
+                    <p id="dailyLoveMessage">Tap below to get your daily love message!</p>
+                    <button class="tts-button" onclick="speakText('dailyLoveMessage', 'en')">🔊</button>
+                </div>
+                <button class="romantic-button" onclick="generateDailyMessage()">New Daily Message</button>
+                <hr style="margin: 20px 0; border-color: var(--primary-pink);">
+                <h3>Quick Actions:</h3>
+                <button class="romantic-button" style="width:100%; margin-bottom:10px;"
+                    onclick="navigateTo('loveLetterMaker')">💌 Create Love Letter</button>
+                <button class="romantic-button" style="width:100%;" onclick="navigateTo('aiLoverChatbot')">💬 Chat
+                    with Love AI</button>
+                <div class="ad-placeholder">Future Ad Space Here</div>
+            </div>
+
+            <!-- 1. Romantic Message Generator -->
+            <div id="romanticMessageGenerator" class="feature-screen">
+                <h2>Romantic Message Generator 💖</h2>
+                <input type="text" id="partnerNameInput" placeholder="Your Partner's Name (Optional)">
+                <button class="romantic-button" id="generateEnglishMessageBtn" onclick="generateMessage('en')">English Message</button>
+                <button class="romantic-button" id="generateBanglaMessageBtn" onclick="generateMessage('bn')">বাংলা মেসেজ</button>
+                <div class="message-display">
+                    <p id="generatedMessageDisplay">Your romantic message will appear here.</p>
+                    <button class="tts-button hidden" id="ttsGeneratedMessage"
+                        onclick="speakGeneratedMessage()">🔊</button>
+                </div>
+
+                <h3>AI-Powered Message (Name Based)</h3>
+                <button class="romantic-button" id="generateAIMessageBtn" onclick="generateAIMessage()">Generate AI Message</button>
+                <div class="message-display">
+                    <p id="aiGeneratedMessageDisplay">AI message based on name will appear here.</p>
+                    <button class="tts-button hidden" id="ttsAIGeneratedMessage"
+                        onclick="speakText('aiGeneratedMessageDisplay', currentAIMessageLang)">🔊</button>
+                </div>
+                <div class="premium-feature-notice">
+                    ✨ More AI message styles and unlimited generation in Premium! <button class="romantic-button"
+                        onclick="alert('Premium feature coming soon!')">Go Premium</button>
+                </div>
+            </div>
+
+            <!-- 2. Love Letter Maker -->
+            <div id="loveLetterMaker" class="feature-screen">
+                <h2>Love Letter Maker ✍️🌹</h2>
+                <textarea id="loveLetterText" placeholder="Pour your heart out..."></textarea>
+                <div class="emoji-palette">
+                    Add Emojis:
+                    <button onclick="addEmojiToLetter('❤️')">❤️</button>
+                    <button onclick="addEmojiToLetter('🌹')">🌹</button>
+                    <button onclick="addEmojiToLetter('😘')">😘</button>
+                    <button onclick="addEmojiToLetter('🥰')">🥰</button>
+                    <button onclick="addEmojiToLetter('💑')">💑</button>
+                </div>
+                <button class="romantic-button" onclick="previewLoveLetter()">Preview Letter</button>
+
+                <div id="loveLetterPreviewArea" class="hidden">
+                    <h3>Preview:</h3>
+                    <div class="love-letter-preview" id="loveLetterOutput"></div>
+                    <div class="share-buttons" style="margin-top:10px;">
+                        <button class="romantic-button" onclick="shareLoveLetter('whatsapp')">Share on
+                            WhatsApp</button>
+                        <button class="romantic-button" onclick="shareLoveLetter('messenger')">Share on
+                            Messenger</button>
+                        <button class="romantic-button" onclick="alert('Printable PDF purchase coming soon!')">Purchase
+                            Printable PDF</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Couple Diary / Timeline -->
+            <div id="coupleDiaryTimeline" class="feature-screen">
+                <h2>Our Story Timeline 💑</h2>
+                <h3>Add New Memory:</h3>
+                <input type="date" id="diaryDate">
+                <textarea id="diaryNote" placeholder="Describe your beautiful memory..."></textarea>
+                <!-- Photo upload is complex in single HTML, skipping for now -->
+                <button class="romantic-button" onclick="addDiaryEntry()">Save Memory ❤️</button>
+
+                <h3>Anniversary Countdown:</h3>
+                <input type="date" id="anniversaryDateInput" title="Set Anniversary Date">
+                <button class="romantic-button" onclick="setAnniversary()">Set Anniversary</button>
+                <div id="countdownTimer">Set your anniversary date!</div>
+
+                <h3>Our Memories:</h3>
+                <div id="diaryEntriesDisplay">
+                    <p>Your saved memories will appear here.</p>
+                </div>
+            </div>
+
+            <!-- 4. Love Quotes & Poems -->
+            <div id="loveQuotesPoems" class="feature-screen">
+                <h2>Love Quotes & Poems 📜</h2>
+                <button class="romantic-button" onclick="getRandomQuote()">Get Random Quote</button>
+                <button class="romantic-button" onclick="getRandomPoem()">Get Random Bangla Poem</button>
+
+                <div class="quote-display">
+                    <p id="quoteDisplay">Famous love quotes will appear here.</p>
+                    <button class="tts-button hidden" id="ttsQuote" onclick="speakText('quoteDisplay', 'en')">🔊</button>
+                </div>
+                <div class="poem-display">
+                    <p id="poemDisplay">Romantic Bangla poems will appear here.</p>
+                    <button class="tts-button hidden" id="ttsPoem" onclick="speakText('poemDisplay', 'bn')">🔊</button>
+                </div>
+                <button class="romantic-button" id="addToFavoritesBtn" style="display:none;"
+                    onclick="addToFavorites()">Add to Favorites ⭐</button>
+
+                <h3>My Favorites:</h3>
+                <ul id="favoritesList" style="list-style: none; padding-left: 0;">
+                    <!-- Favorites will be listed here -->
+                </ul>
+            </div>
+
+            <!-- 5. AI Lover Chatbot (Placeholder) -->
+            <div id="aiLoverChatbot" class="feature-screen">
+                <h2>AI Sweetheart Chat 💬❤️</h2>
+                <div class="chat-area" id="chatArea">
+                    <div class="bot-message">Hello, my love! How can I sweeten your day? 🥰</div>
+                </div>
+                <input type="text" id="chatInput" placeholder="Type your message..."
+                    onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                <button class="romantic-button" onclick="sendChatMessage()">Send 💌</button>
+            </div>
+
+            <!-- 6. Gift Ideas (Placeholder) -->
+            <div id="giftIdeas" class="feature-screen">
+                <h2>Romantic Gift Ideas 🎁</h2>
+                <div class="gift-suggestion">
+                    <img src="https://via.placeholder.com/100x100.png?text=Rose+Bouquet" alt="Gift Idea">
+                    <h4>Enchanting Rose Bouquet</h4>
+                    <p>A classic symbol of love, perfect for any occasion. Add a personalized note!</p>
+                    <a href="#" target="_blank">Find local florists</a>
+                </div>
+                <div class="gift-suggestion">
+                    <img src="https://via.placeholder.com/100x100.png?text=Couple+Jewelry" alt="Gift Idea">
+                    <h4>Personalized Couple Jewelry</h4>
+                    <p>Matching necklaces or bracelets with your initials or a special date.</p>
+                    <a href="#" target="_blank">Shop jewelry</a>
+                </div>
+                <div class="premium-feature-notice">
+                    Unlock curated AI gift suggestions based on your partner's preferences in Premium!
+                    <button class="romantic-button" onclick="alert('Premium feature coming soon!')">Go Premium</button>
+                </div>
+            </div>
+
+            <!-- 7. Love Games (Placeholder) -->
+            <div id="loveGames" class="feature-screen">
+                <h2>Love Games & Quizzes 💞</h2>
+                <p>Coming soon: Fun quizzes and games to play together!</p>
+                <div class="quiz-question">
+                    <h4>How well do you know your partner?</h4>
+                    <button class="romantic-button" onclick="alert('Quiz coming soon!')">Start Quiz</button>
+                </div>
+            </div>
+
+             <!-- 8. Settings -->
+            <div id="settingsScreen" class="feature-screen">
+                <h2>Settings ⚙️</h2>
+                <h3>App Lock</h3>
+                <button class="romantic-button" onclick="setupPin()">Set/Change PIN</button>
+                <button class="romantic-button" onclick="toggleAppLock()">
+                    Toggle App Lock (Currently: <span id="appLockStatus">Disabled</span>)
+                </button>
+
+                <h3>Background Music</h3>
+                 <button class="romantic-button" onclick="toggleBackgroundMusic()">
+                    Toggle Music (Currently: <span id="musicStatus">OFF</span>)
+                </button>
+
+                <h3>Theme (Coming Soon)</h3>
+                <select disabled>
+                    <option>Default Romantic</option>
+                    <option>Passionate Red</option>
+                    <option>Serene Blue</option>
+                </select>
+
+                <div class="ad-placeholder" style="margin-top: 30px;">Settings Ad Space</div>
+            </div>
+
+        </div> <!-- End App Content -->
+
+        <div class="bottom-nav">
+            <button class="nav-item active" onclick="navigateTo('homeScreen')">
+                <span class="nav-icon">🏠</span> Home
+            </button>
+            <button class="nav-item" onclick="navigateTo('romanticMessageGenerator')">
+                <span class="nav-icon">💌</span> Messages
+            </button>
+            <button class="nav-item" onclick="navigateTo('loveQuotesPoems')">
+                <span class="nav-icon">📜</span> Quotes
+            </button>
+            <button class="nav-item" onclick="navigateTo('coupleDiaryTimeline')">
+                <span class="nav-icon">💖</span> Diary
+            </button>
+            <button class="nav-item" onclick="navigateTo('settingsScreen')">
+                <span class="nav-icon">⚙️</span> Settings
+            </button>
+        </div>
+    </div> <!-- End App Container -->
+
+    <script>
+        // --- Ad Settings ---
+        const ADSTERRA_DIRECT_LINK = 'https://www.profitableratecpm.com/tx5tbr12?key=3d3af292ae8928c0c179fa22a84f5b91';
+        const AD_DELAY_MS = 5000; // 5 seconds
+
+        // --- Global State ---
+        let currentScreen = 'homeScreen';
+        let currentGeneratedMessageLang = 'en';
+        let currentAIMessageLang = 'en';
+        let diaryEntries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
+        let anniversaryInterval;
+        let favorites = JSON.parse(localStorage.getItem('loveFavorites')) || [];
+        let lastFavoriteType = ''; // 'quote' or 'poem'
+        let lastFavoriteContent = '';
+        let isAppLockEnabled = localStorage.getItem('appLockEnabled') === 'true';
+        let appPin = localStorage.getItem('appPin');
+
+        // --- DOM Elements ---
+        const screens = document.querySelectorAll('.feature-screen');
+        const navItems = document.querySelectorAll('.nav-item');
+        const dailyMessageEl = document.getElementById('dailyLoveMessage');
+        const generatedMessageDisplayEl = document.getElementById('generatedMessageDisplay');
+        const ttsGeneratedMessageBtn = document.getElementById('ttsGeneratedMessage');
+        const aiGeneratedMessageDisplayEl = document.getElementById('aiGeneratedMessageDisplay');
+        const ttsAIGeneratedMessageBtn = document.getElementById('ttsAIGeneratedMessage');
+        const loveLetterTextEl = document.getElementById('loveLetterText');
+        const loveLetterOutputEl = document.getElementById('loveLetterOutput');
+        const loveLetterPreviewAreaEl = document.getElementById('loveLetterPreviewArea');
+        const diaryEntriesDisplayEl = document.getElementById('diaryEntriesDisplay');
+        const countdownTimerEl = document.getElementById('countdownTimer');
+        const quoteDisplayEl = document.getElementById('quoteDisplay');
+        const ttsQuoteBtn = document.getElementById('ttsQuote');
+        const poemDisplayEl = document.getElementById('poemDisplay');
+        const ttsPoemBtn = document.getElementById('ttsPoem');
+        const addToFavoritesBtn = document.getElementById('addToFavoritesBtn');
+        const favoritesListEl = document.getElementById('favoritesList');
+        const fallingHeartsContainer = document.getElementById('fallingHeartsContainer');
+        const appLockScreen = document.getElementById('appLockScreen');
+        const pinInput = document.getElementById('pinInput');
+        const pinError = document.getElementById('pinError');
+        const pinInstruction = document.getElementById('pinInstruction');
+        const pinSubmitButton = document.getElementById('pinSubmitButton');
+        const pinSetupButton = document.getElementById('pinSetupButton');
+        const appLockStatusEl = document.getElementById('appLockStatus');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const musicStatusEl = document.getElementById('musicStatus');
+
+        // --- Sample Data ---
+        const dailyMessages = [
+            "Thinking of you makes my day brighter. I love you!",
+            "You are my sunshine on a cloudy day. ❤️",
+            "Every moment with you is a treasure. 🥰",
+            "My heart beats only for you. I love you more than words can say.",
+            "You're the reason for my smile every day. 🌹"
+        ];
+        const romanticMessages_en = [
+            "My dearest {partnerName}, you are the melody to my heart's song. I love you endlessly.",
+            "To my love {partnerName}: Every day I spend with you is my new favorite day.",
+            "Hey {partnerName}, just wanted to say I'm crazy about you! ❤️",
+            "{partnerName}, you make my world a beautiful place. I'm so lucky to have you.",
+            "I fall for you more and more each day, {partnerName}."
+        ];
+        const romanticMessages_bn = [
+            "প্রিয় {partnerName}, তুমি আমার হৃদয়ের স্পন্দন। তোমাকে অনেক ভালোবাসি।",
+            "আমার ভালোবাসা {partnerName}, তোমার সাথে কাটানো প্রতিটি দিন আমার প্রিয় দিন।",
+            "শোনো {partnerName}, শুধু বলতে চাই আমি তোমার জন্য পাগল! ❤️",
+            "{partnerName}, তুমি আমার জীবনকে সুন্দর করেছো। তোমাকে পেয়ে আমি ভাগ্যবান।",
+            "আমি প্রতিদিন তোমার প্রেমে নতুন করে পড়ি, {partnerName}।"
+        ];
+        const loveQuotes = [
+            "\"The best thing to hold onto in life is each other.\" - Audrey Hepburn",
+            "\"To love and be loved is to feel the sun from both sides.\" - David Viscott",
+            "\"You know you're in love when you can't fall asleep because reality is finally better than your dreams.\" - Dr. Seuss",
+            "\"Love is composed of a single soul inhabiting two bodies.\" - Aristotle",
+            "\"If I know what love is, it is because of you.\" - Hermann Hesse"
+        ];
+        const lovePoems_bn = [
+            "তুমি রবে নীরবে, হৃদয়ে মম,\nগভীর নিশীথে যেমন আলোক,\nপ্রেমের স্বপনে।" ,
+            "আকাশের মতো অসীম তোমার ভালোবাসা,\nসাগরের মতো গভীর তোমার মায়া,\nআমি তোমাতে হারাই প্রতিদিন।" ,
+            "ফুলের সুবাসে যেমন মিশে থাকে প্রেম,\nআমার প্রতি নিঃশ্বাসে মিশে আছো তুমি,\nআমার প্রিয়তম/প্রিয়তমা।"
+        ];
+
+        // --- Ad Functionality ---
+        let isAdActionInProgress = false;
+
+        function showAdAndProceed(actionCallback, loadingMessageElement, loadingMessageText, buttonToDisable) {
+            if (isAdActionInProgress) return;
+            isAdActionInProgress = true;
+            if (buttonToDisable) buttonToDisable.disabled = true;
+
+            if (loadingMessageElement && loadingMessageText) {
+                loadingMessageElement.textContent = loadingMessageText;
+            }
+
+            window.open(ADSTERRA_DIRECT_LINK, '_blank');
+
+            setTimeout(() => {
+                actionCallback();
+                isAdActionInProgress = false;
+                 if (buttonToDisable) buttonToDisable.disabled = false;
+            }, AD_DELAY_MS);
+        }
+
+
+        // --- Navigation ---
+        function navigateTo(screenId) {
+            screens.forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            currentScreen = screenId;
+
+            navItems.forEach(item => item.classList.remove('active'));
+            const activeNavItem = Array.from(navItems).find(item => item.getAttribute('onclick').includes(screenId));
+            if (activeNavItem) activeNavItem.classList.add('active');
+
+            // Specific actions on navigation
+            if (screenId === 'coupleDiaryTimeline') renderDiaryEntries();
+            if (screenId === 'loveQuotesPoems') renderFavorites();
+            if (screenId === 'settingsScreen') updateSettingsUI();
+        }
+
+        // --- Text-to-Speech ---
+        function speakText(elementId, lang) {
+            const text = document.getElementById(elementId).textContent;
+            if ('speechSynthesis' in window && text) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('TTS not supported or no text to speak.');
+            }
+        }
+
+        function speakGeneratedMessage() {
+            speakText('generatedMessageDisplay', currentGeneratedMessageLang);
+        }
+
+        // --- Home Screen ---
+        function generateDailyMessage() {
+            const message = dailyMessages[Math.floor(Math.random() * dailyMessages.length)];
+            dailyMessageEl.textContent = message;
+            // Enable TTS for daily message if needed by adding lang specific button
+        }
+
+        // --- Romantic Message Generator ---
+        function generateMessage(lang) {
+            const partnerName = document.getElementById('partnerNameInput').value.trim() || (lang === 'bn' ? "প্রিয়তম/প্রিয়তমা" : "my love");
+            const messageDisplay = generatedMessageDisplayEl;
+            const ttsButton = ttsGeneratedMessageBtn;
+            
+            const actualMessageGeneration = () => {
+                let messages = lang === 'bn' ? romanticMessages_bn : romanticMessages_en;
+                let message = messages[Math.floor(Math.random() * messages.length)];
+                message = message.replace(/{partnerName}/g, partnerName);
+                messageDisplay.textContent = message;
+                ttsButton.classList.remove('hidden');
+                currentGeneratedMessageLang = lang;
+            };
+
+            if (lang === 'bn') {
+                const btn = document.getElementById('generateBanglaMessageBtn');
+                showAdAndProceed(
+                    actualMessageGeneration, 
+                    messageDisplay, 
+                    "বিজ্ঞাপন লোড হচ্ছে... আপনার বার্তা কিছুক্ষণের মধ্যে তৈরি হবে।",
+                    btn
+                );
+            } else { // For English, no ad as per specific request on 'bn' and 'ai'
+                actualMessageGeneration();
+            }
+        }
+
+        function generateAIMessage() {
+            const partnerName = document.getElementById('partnerNameInput').value.trim() || "Sweetheart";
+            const messageDisplay = aiGeneratedMessageDisplayEl;
+            const ttsButton = ttsAIGeneratedMessageBtn;
+            const btn = document.getElementById('generateAIMessageBtn');
+
+            const actualAIMessageGeneration = () => {
+                // Simple AI-like message template
+                const aiTemplates = [
+                    `My dearest ${partnerName}, my algorithms of affection compute you as 100% lovable! Every moment with you feels like a perfectly optimized dream. ❤️`,
+                    `${partnerName}, if my love for you was data, it would be infinite. You're the most beautiful variable in the equation of my life. 🥰`,
+                    `Hey ${partnerName}, analyzing our connection... Result: Pure happiness. You've debugged my heart! 😉`
+                ];
+                const message = aiTemplates[Math.floor(Math.random() * aiTemplates.length)];
+                messageDisplay.textContent = message;
+                ttsButton.classList.remove('hidden');
+                currentAIMessageLang = 'en'; // Assuming AI messages are in English for now
+            };
+            
+            showAdAndProceed(
+                actualAIMessageGeneration,
+                messageDisplay,
+                "Opening ad... AI message will generate after a short delay.",
+                btn
+            );
+        }
+
+        // --- Love Letter Maker ---
+        function addEmojiToLetter(emoji) {
+            loveLetterTextEl.value += emoji;
+        }
+
+        function previewLoveLetter() {
+            const text = loveLetterTextEl.value;
+            if (text.trim() === "") {
+                alert("Please write something in your letter first!");
+                return;
+            }
+            loveLetterOutputEl.innerText = text; // Use innerText to preserve line breaks somewhat
+            loveLetterPreviewAreaEl.classList.remove('hidden');
+        }
+
+        function shareLoveLetter(platform) {
+            const letterText = loveLetterOutputEl.innerText;
+            if (!letterText) {
+                alert("Preview the letter first!");
+                return;
+            }
+            let shareUrl = "";
+            const encodedText = encodeURIComponent(letterText);
+
+            if (platform === 'whatsapp') {
+                shareUrl = `https://wa.me/?text=${encodedText}`;
+            } else if (platform === 'messenger') {
+                // Messenger doesn't have a direct text share URL like WhatsApp for web.
+                // This will open a prompt for user to choose recipient.
+                // For mobile, it might try to open the app if a proper app scheme is used (fb-messenger://share?text=...)
+                // but that's more complex and platform-dependent for a simple web app.
+                alert("Sharing on Messenger often requires copy-pasting. The text is:\n\n" + letterText + "\n\nYou can also try a general share:");
+                 if (navigator.share) {
+                    navigator.share({ title: 'My Love Letter', text: letterText })
+                        .then(() => console.log('Successful share'))
+                        .catch((error) => console.log('Error sharing', error));
+                    return;
+                } else {
+                     shareUrl = `https://www.facebook.com/dialog/send?app_id=YOUR_FACEBOOK_APP_ID&link=${encodeURIComponent(window.location.href)}&redirect_uri=${encodeURIComponent(window.location.href)}"e=${encodedText}`;
+                     alert("To share on Messenger, you might need a Facebook App ID. For now, please copy the text or use a general share if your device supports it.");
+                     // A simple workaround for now, as proper FB sharing is more involved.
+                     prompt("Copy this text to share:", letterText);
+                     return; // Prevent opening a broken link
+                }
+            }
+            if (shareUrl) window.open(shareUrl, '_blank');
+        }
+
+
+        // --- Couple Diary / Timeline ---
+        function addDiaryEntry() {
+            const date = document.getElementById('diaryDate').value;
+            const note = document.getElementById('diaryNote').value.trim();
+
+            if (!date || !note) {
+                alert("Please select a date and write a note for your memory.");
+                return;
+            }
+            diaryEntries.push({ date, note });
+            localStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
+            renderDiaryEntries();
+            document.getElementById('diaryNote').value = ''; // Clear textarea
+        }
+
+        function renderDiaryEntries() {
+            if (diaryEntries.length === 0) {
+                diaryEntriesDisplayEl.innerHTML = "<p>No memories saved yet. Add your first one! 🥰</p>";
+                return;
+            }
+            // Sort by date, newest first
+            const sortedEntries = [...diaryEntries].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            diaryEntriesDisplayEl.innerHTML = sortedEntries.map(entry => `
+                <div class="diary-entry">
+                    <strong>${new Date(entry.date).toLocaleDateString()}</strong>
+                    <p>${entry.note.replace(/\n/g, '<br>')}</p>
+                </div>
+            `).join('');
+        }
+
+        function setAnniversary() {
+            const dateStr = document.getElementById('anniversaryDateInput').value;
+            if (!dateStr) {
+                alert("Please select your anniversary date.");
+                return;
+            }
+            localStorage.setItem('anniversaryDate', dateStr);
+            startCountdown(dateStr);
+        }
+
+        function startCountdown(dateStr) {
+            if (anniversaryInterval) clearInterval(anniversaryInterval);
+            const anniversaryDate = new Date(dateStr);
+
+            anniversaryInterval = setInterval(() => {
+                const now = new Date();
+                let nextAnniversary = new Date(now.getFullYear(), anniversaryDate.getMonth(), anniversaryDate.getDate());
+                if (now > nextAnniversary) { // If this year's anniversary has passed
+                    nextAnniversary.setFullYear(now.getFullYear() + 1);
+                }
+
+                const diff = nextAnniversary - now;
+
+                if (diff <= 0) { // It's today or passed for this year
+                    let years = now.getFullYear() - anniversaryDate.getFullYear();
+                    if(now.getMonth() < anniversaryDate.getMonth() || (now.getMonth() === anniversaryDate.getMonth() && now.getDate() < anniversaryDate.getDate())) {
+                        years--; // If anniversary hasn't occurred this year yet
+                    }
+                    if(years < 0) years = 0; // Should not happen if date is in past
+
+                    // Check if it's the exact day
+                    if(now.getMonth() === anniversaryDate.getMonth() && now.getDate() === anniversaryDate.getDate()){
+                         countdownTimerEl.innerHTML = `🎉 Happy ${ordinalSuffix(years)} Anniversary Today! ❤️`;
+                    } else {
+                        // If it passed and next one is being calculated
+                        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                        countdownTimerEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s until next anniversary!`;
+                    }
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                countdownTimerEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s until your anniversary!`;
+            }, 1000);
+        }
+         function ordinalSuffix(i) {
+            var j = i % 10, k = i % 100;
+            if (j == 1 && k != 11) return i + "st";
+            if (j == 2 && k != 12) return i + "nd";
+            if (j == 3 && k != 13) return i + "rd";
+            return i + "th";
+        }
+
+
+        // --- Love Quotes & Poems ---
+        function getRandomQuote() {
+            const quote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
+            quoteDisplayEl.textContent = quote;
+            ttsQuoteBtn.classList.remove('hidden');
+            addToFavoritesBtn.style.display = 'inline-block';
+            lastFavoriteType = 'quote';
+            lastFavoriteContent = quote;
+        }
+
+        function getRandomPoem() {
+            const poem = lovePoems_bn[Math.floor(Math.random() * lovePoems_bn.length)];
+            poemDisplayEl.textContent = poem;
+            ttsPoemBtn.classList.remove('hidden');
+            addToFavoritesBtn.style.display = 'inline-block';
+            lastFavoriteType = 'poem';
+            lastFavoriteContent = poem;
+        }
+
+        function addToFavorites() {
+            if (lastFavoriteContent && !favorites.some(fav => fav.content === lastFavoriteContent)) {
+                favorites.push({ type: lastFavoriteType, content: lastFavoriteContent });
+                localStorage.setItem('loveFavorites', JSON.stringify(favorites));
+                renderFavorites();
+                alert('Added to favorites! ❤️');
+            } else if(favorites.some(fav => fav.content === lastFavoriteContent)) {
+                alert('Already in favorites! 😉');
+            } else {
+                 alert('Generate a quote or poem first!');
+            }
+        }
+
+        function renderFavorites() {
+            if (favorites.length === 0) {
+                favoritesListEl.innerHTML = "<p>No favorites saved yet. Find some quotes or poems you love!</p>";
+                return;
+            }
+            favoritesListEl.innerHTML = favorites.map((fav, index) => `
+                <li style="padding: 8px; border-bottom: 1px solid var(--primary-pink); display:flex; justify-content: space-between; align-items: center;">
+                    <span style="flex-grow:1; white-space: pre-wrap;"><em>${fav.type === 'poem' ? 'Poem:' : 'Quote:'}</em> ${fav.content}</span>
+                    <button class="romantic-button" style="font-size:12px; padding: 5px 10px; margin-left:10px;" onclick="removeFavorite(${index})">Remove</button>
+                </li>
+            `).join('');
+        }
+        function removeFavorite(index) {
+            favorites.splice(index, 1);
+            localStorage.setItem('loveFavorites', JSON.stringify(favorites));
+            renderFavorites();
+        }
+
+        // --- AI Chatbot (Simple Mock) ---
+        const chatArea = document.getElementById('chatArea');
+        const chatInput = document.getElementById('chatInput');
+
+        function sendChatMessage() {
+            const messageText = chatInput.value.trim();
+            if (!messageText) return;
+
+            appendChatMessage(messageText, 'user-message');
+            chatInput.value = '';
+
+            // Simple bot responses
+            setTimeout(() => {
+                let botResponse = "I'm listening, my love... Tell me more. 🥰";
+                if (messageText.toLowerCase().includes("love you")) {
+                    botResponse = "Oh, I love you too, more than words can say! ❤️❤️❤️";
+                } else if (messageText.toLowerCase().includes("how are you")) {
+                    botResponse = "I'm wonderful, especially now that I'm talking to you! 😉 How about you, darling?";
+                } else if (messageText.toLowerCase().includes("miss you")) {
+                    botResponse = "I miss you too, every second we're apart. Sending you a virtual hug! 🤗";
+                }
+                appendChatMessage(botResponse, 'bot-message');
+            }, 1000);
+        }
+
+        function appendChatMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message', type);
+            messageDiv.textContent = text;
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight; // Scroll to bottom
+        }
+
+        // --- Falling Hearts ---
+        function createFallingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('falling-heart');
+            heart.innerHTML = ['❤️', '💖', '💕', '💓', '💗'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's'; // 4-7 seconds
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px'; // 15-25px
+            fallingHeartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000); // Remove after animation ends
+        }
+
+
+        // --- App Lock ---
+        function checkAppLock() {
+            if (isAppLockEnabled && appPin) {
+                appLockScreen.classList.remove('hidden');
+                pinInstruction.textContent = "Enter your PIN to unlock.";
+                pinSubmitButton.classList.remove('hidden');
+                pinSetupButton.classList.add('hidden');
+            } else if (isAppLockEnabled && !appPin) { // Lock enabled but no PIN set
+                appLockScreen.classList.remove('hidden');
+                pinInstruction.textContent = "Please set up a PIN for the app lock.";
+                pinSubmitButton.classList.add('hidden');
+                pinSetupButton.classList.remove('hidden');
+                pinSetupButton.textContent = "Set Up PIN";
+            } else {
+                appLockScreen.classList.add('hidden');
+            }
+            updateSettingsUI();
+        }
+
+        function setupPin() { // Called from settings or if lock enabled but no PIN
+            appLockScreen.classList.remove('hidden');
+            pinInstruction.textContent = "Set a new 4-digit PIN.";
+            pinInput.value = '';
+            pinError.textContent = '';
+            pinSubmitButton.classList.add('hidden');
+            pinSetupButton.classList.remove('hidden');
+            pinSetupButton.textContent = "Save PIN"; // Change button text for setup context
+
+            // Temporarily change pinSetupButton's onclick for this flow
+            pinSetupButton.onclick = function() {
+                const newPin = pinInput.value;
+                if (newPin.length === 4 && /^\d+$/.test(newPin)) {
+                    appPin = newPin;
+                    localStorage.setItem('appPin', appPin);
+                    isAppLockEnabled = true; // Enable lock when PIN is set
+                    localStorage.setItem('appLockEnabled', 'true');
+                    pinError.textContent = "PIN set successfully!";
+                    setTimeout(() => {
+                        appLockScreen.classList.add('hidden');
+                        updateSettingsUI();
+                        // Restore original setupPin function for settings button
+                        pinSetupButton.onclick = setupPin; 
+                        pinSetupButton.textContent = "Set up PIN";
+                    }, 1500);
+                } else {
+                    pinError.textContent = "PIN must be 4 digits.";
+                }
+            };
+        }
+
+
+        pinSubmitButton.addEventListener('click', () => {
+            if (pinInput.value === appPin) {
+                appLockScreen.classList.add('hidden');
+                pinInput.value = '';
+                pinError.textContent = '';
+            } else {
+                pinError.textContent = "Incorrect PIN. Try again.";
+                pinInput.value = '';
+            }
+        });
+
+        function toggleAppLock() {
+            isAppLockEnabled = !isAppLockEnabled;
+            localStorage.setItem('appLockEnabled', isAppLockEnabled);
+            if (isAppLockEnabled && !appPin) {
+                setupPin(); // Force PIN setup if enabling lock without one
+            } else if (!isAppLockEnabled) {
+                 appLockScreen.classList.add('hidden'); // Hide lock screen if disabled
+            }
+            updateSettingsUI();
+        }
+
+        function updateSettingsUI() {
+            if (appLockStatusEl) appLockStatusEl.textContent = isAppLockEnabled ? "Enabled" : "Disabled";
+            if (musicStatusEl) musicStatusEl.textContent = backgroundMusic.paused ? "OFF" : "ON";
+        }
+
+        // --- Background Music ---
+        let musicPlayedOnce = false;
+        function toggleBackgroundMusic() {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play().catch(e => console.warn("Autoplay prevented:", e));
+                musicPlayedOnce = true;
+            } else {
+                backgroundMusic.pause();
+            }
+            updateSettingsUI();
+        }
+         // Try to play music on first user interaction (modern browser policy)
+        document.body.addEventListener('click', () => {
+            if (!musicPlayedOnce && backgroundMusic.paused && musicStatusEl.textContent === "ON") { // Check if user intended it to be on
+                 backgroundMusic.play().catch(e => console.warn("Autoplay prevented on click:", e));
+                 musicPlayedOnce = true;
+            }
+        }, { once: true });
+
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            generateDailyMessage(); // Initial daily message
+            const savedAnniversary = localStorage.getItem('anniversaryDate');
+            if (savedAnniversary) {
+                document.getElementById('anniversaryDateInput').value = savedAnniversary;
+                startCountdown(savedAnniversary);
+            }
+            renderDiaryEntries();
+            renderFavorites();
+            navigateTo('homeScreen'); // Show home screen first
+            setInterval(createFallingHeart, 1000); // Create a heart every second
+            checkAppLock(); // Check lock status on load
+            updateSettingsUI(); // Initial UI state for settings toggles
+
+             // Set default music status to ON if not set, but don't autoplay yet
+            if (localStorage.getItem('musicPreference') === null) {
+                 localStorage.setItem('musicPreference', 'on');
+            }
+            if (localStorage.getItem('musicPreference') === 'on') {
+                musicStatusEl.textContent = "ON";
+                // Music will attempt to play on first click due to browser policy
+            } else {
+                 musicStatusEl.textContent = "OFF";
+                 backgroundMusic.pause();
+            }
+
+        });
+    </script>
+</body>
+</html>
